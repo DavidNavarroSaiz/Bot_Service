@@ -134,8 +134,8 @@ async def ask_question(question_input: QuestionInput):
                     print("NN response", response)
                     return {"answer": response}
         else:
-            docs = knowledgeBase.similarity_search_with_relevance_scores(query, 4)
-            docs = filter_results_by_score(docs, 0.7)
+            docs_scores = knowledgeBase.similarity_search_with_relevance_scores(query, 4)
+            docs = filter_results_by_score(docs_scores, 0.7)
             
             if len(docs) != 0:
                 llm = OpenAI(temperature=0.1)
