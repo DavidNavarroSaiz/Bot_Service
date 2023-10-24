@@ -34,7 +34,7 @@ app.add_middleware(
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load intents from JSON file
-with open("intents.json", "r") as json_data:
+with open("intents.json", "r", encoding="utf-8") as json_data:
     intents = json.load(json_data)
 
 # Load data from a pre-trained model
@@ -56,12 +56,12 @@ model_nn.eval()
 bot_name = "Sam"
 
 # Define a function to process text and create a knowledge base
-def process_text(text):
+def process_text(text_process):
     """
     Processes text by splitting it into chunks and converting them to embeddings.
 
     Args:
-        text: The text to be processed.
+        text_process: The text to be processed.
 
     Returns:
         A FAISS object containing the text embeddings.
@@ -70,7 +70,7 @@ def process_text(text):
     text_splitter = CharacterTextSplitter(
         separator="\n", chunk_size=1000, chunk_overlap=200, length_function=len
     )
-    chunks = text_splitter.split_text(text)
+    chunks = text_splitter.split_text(text_process)
 
     # Convert the chunks of text into embeddings to form a knowledge base
     embeddings = OpenAIEmbeddings()
@@ -84,7 +84,7 @@ def process_text(text):
 # Load or create knowledge base
 try:
     with open("knowledgeBase.pkl", "rb") as pickle_file:
-        knowledgeBase = pickle.load(pickle_file)
+        knowledgeBase_pkl = pickle.load(pickle_file)
         print("pickle loaded")
 except FileNotFoundError:
     pdf_path = "./../Deep Learning.pdf"
@@ -93,7 +93,7 @@ except FileNotFoundError:
     for page in pdf_reader.pages:
         text += page.extract_text()
 
-    knowledgeBase = process_text(text)
+    knowledgeBase_pkl = process_text(text)
     print("pdf loaded")
 
 # Pydantic model for question input
@@ -134,7 +134,7 @@ async def ask_question(question_input: QuestionInput):
                     print("NN response", response)
                     return {"answer": response}
         else:
-            docs_scores = knowledgeBase.similarity_search_with_relevance_scores(query, 4)
+            docs_scores = knowledgeBase_pkl.similarity_search_with_relevance_scores(query, 4)
             docs = filter_results_by_score(docs_scores, 0.7)
             
             if len(docs) != 0:
