@@ -76,8 +76,8 @@ def process_text(text_process):
     embeddings = OpenAIEmbeddings()
     knowledgeBase = FAISS.from_texts(chunks, embeddings)
     
-    with open("knowledgeBase.pkl", "wb") as pickle_file:
-        pickle.dump(knowledgeBase, pickle_file)
+    with open("knowledgeBase.pkl", "wb") as pickle_f:
+        pickle.dump(knowledgeBase, pickle_f)
     
     return knowledgeBase
 
