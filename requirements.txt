@@ -1,0 +1,5 @@
+pylint
+pytest
+black
+numpy
+bard
