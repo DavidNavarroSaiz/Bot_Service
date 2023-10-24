@@ -5,7 +5,7 @@ numpy
 torch
 torchvision
 fastapi
-langchain
+langchain==0.0.147
 nltk
 openai
 PyPDF2

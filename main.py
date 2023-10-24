@@ -15,6 +15,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from model import NeuralNet
 from dotenv import load_dotenv
+from langchain import OpenAI
+
 
 load_dotenv()
 
