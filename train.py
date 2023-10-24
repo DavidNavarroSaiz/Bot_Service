@@ -63,6 +63,9 @@ print(input_size, output_size)
 
 
 class ChatDataset(Dataset):
+    """
+    Custom PyTorch dataset for the chat data.
+    """
     def __init__(self):
         self.n_samples = len(X_train)
         self.x_data = X_train

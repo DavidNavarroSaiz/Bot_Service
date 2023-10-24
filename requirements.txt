@@ -10,4 +10,5 @@ nltk
 openai
 PyPDF2
 uvicorn
-dotenv
+python-dotenv
+
