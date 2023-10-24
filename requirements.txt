@@ -9,3 +9,5 @@ langchain
 nltk
 openai
 PyPDF2
+uvicorn
+dotenv
