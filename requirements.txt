@@ -2,4 +2,10 @@ pylint
 pytest
 black
 numpy
-bard
+torch
+torchvision
+fastapi
+langchain
+nltk
+openai
+PyPDF2
