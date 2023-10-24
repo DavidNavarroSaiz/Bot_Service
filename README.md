@@ -143,3 +143,13 @@ Provide examples and instructions on how to use the FastAPI service to interact 
 curl -X POST http://localhost:8000/ask_question -d "message=Hello, chatbot!"
 
 ```
+
+to format code using black:
+
+```
+black ./Bot_Service
+```
+To pylint and evaluate your code:
+```
+pylint ./Bot_Service
+```
