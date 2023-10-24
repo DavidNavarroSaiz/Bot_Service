@@ -9,7 +9,6 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain import FAISS
 from langchain.chains.question_answering import load_qa_chain
-from langchain.llms import OpenAI
 from langchain.callbacks import get_openai_callback
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -50,9 +49,9 @@ tags = data["tags"]
 model_state = data["model_state"]
 
 # Initialize the neural network model
-model = NeuralNet(input_size, hidden_size, output_size).to(device)
-model.load_state_dict(model_state)
-model.eval()
+model_nn = NeuralNet(input_size, hidden_size, output_size).to(device)
+model_nn.load_state_dict(model_state)
+model_nn.eval()
 
 bot_name = "Sam"
 
@@ -121,7 +120,7 @@ async def ask_question(question_input: QuestionInput):
         X = bag_of_words(sentence, all_words)
         X = X.reshape(1, X.shape[0])
         X = torch.from_numpy(X).to(device)
-        output = model(X)
+        output = model_nn(X)
         _, predicted = torch.max(output, dim=1)
         tag = tags[predicted.item()]
 

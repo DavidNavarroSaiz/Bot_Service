@@ -6,6 +6,7 @@ torch
 torchvision
 fastapi
 langchain==0.0.147
+pydantic==1.10.8
 nltk
 openai
 PyPDF2
