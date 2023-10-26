@@ -34,11 +34,11 @@ app.add_middleware(
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load intents from JSON file
-with open("intents.json", "r", encoding="utf-8") as json_data:
+with open("./docs/intents.json", "r", encoding="utf-8") as json_data:
     intents = json.load(json_data)
 
 # Load data from a pre-trained model
-FILE = "data.pth"
+FILE = "./docs/data.pth"
 data = torch.load(FILE)
 
 input_size = data["input_size"]
@@ -52,8 +52,6 @@ model_state = data["model_state"]
 model_nn = NeuralNet(input_size, hidden_size, output_size).to(device)
 model_nn.load_state_dict(model_state)
 model_nn.eval()
-
-bot_name = "Sam"
 
 # Define a function to process text and create a knowledge base
 def process_text(text_process):
@@ -76,18 +74,18 @@ def process_text(text_process):
     embeddings = OpenAIEmbeddings()
     knowledgeBase = FAISS.from_texts(chunks, embeddings)
     
-    with open("knowledgeBase.pkl", "wb") as pickle_f:
+    with open("./docs/knowledgeBase.pkl", "wb") as pickle_f:
         pickle.dump(knowledgeBase, pickle_f)
     
     return knowledgeBase
 
 # Load or create knowledge base
 try:
-    with open("knowledgeBase.pkl", "rb") as pickle_file:
+    with open("./docs/knowledgeBase.pkl", "rb") as pickle_file:
         knowledgeBase_pkl = pickle.load(pickle_file)
         print("pickle loaded")
 except FileNotFoundError:
-    pdf_path = "./../Deep Learning.pdf"
+    pdf_path = "./docs/Deep Learning.pdf"
     pdf_reader = PdfReader(pdf_path)
     text = ""
     for page in pdf_reader.pages:
@@ -95,10 +93,6 @@ except FileNotFoundError:
 
     knowledgeBase_pkl = process_text(text)
     print("pdf loaded")
-
-# Pydantic model for question input
-class QuestionInput(BaseModel):
-    query: str
 
 # Define routes using FastAPI decorators
 @app.get("/")
@@ -108,6 +102,10 @@ def index_get():
 # Define a function to filter results by relevance score
 def filter_results_by_score(results, threshold):
     return [doc for doc, score in results if score >= threshold]
+
+# Pydantic model for question input
+class QuestionInput(BaseModel):
+    query: str
 
 # Use the function
 @app.post("/ask_question")
@@ -126,8 +124,8 @@ async def ask_question(question_input: QuestionInput):
 
         probs = torch.softmax(output, dim=1)
         prob = probs[0][predicted.item()]
-
-        if prob.item() > 0.95:
+        print("prob: ",prob)
+        if prob.item() > 0.998:
             for intent in intents["intents"]:
                 if tag == intent["tag"]:
                     response = random.choice(intent["responses"])

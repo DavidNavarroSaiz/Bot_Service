@@ -1,0 +1,95 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hey",
+        "How are you?",
+        "Is anyone there?",
+        "Hello",
+        "Good day",
+        "good morning",
+        "good afeternoon",
+        "greetings",
+        "salutations",
+        "hello there",
+        "good evening",
+        "howdy",
+        "how's it going?",
+        "salutations",
+        "ahoy there"
+
+      ],
+      "responses": [
+        "Hello, how can i help you today?",
+        "Hello, thanks for visiting, how can i help you",
+        "Hi there, what can I do for you?",
+        "Hi there, how can I help?",
+        "Hello, how can I brighten your day?",
+        "Hey, I'm here to make your life easier. What can I do for you today?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye",
+         "See you later", 
+         "Goodbye",
+         "good bye",
+         "Farewell",
+         "It was nice talking to you",
+         "Have a good day",
+         "Have a good afternoon",
+         "Have a good night",
+         "See you around",
+         "Take care",
+         "Peace out",
+         "have a nice day"
+
+        ],
+      "responses": [
+        "See you later, thanks for visiting",
+        "Have a nice day",
+        "Bye! Come back again soon.",
+        "Thank you for your time. Please do not hesitate to contact us again if you have any further questions or concerns",
+        "I hope this information has been helpful. Please let me know if you have any other questions.",
+        "It was my pleasure assisting you today. Have a great day!",
+        "Thanks for chatting with me today! If you have any other questions, don't hesitate to reach out.",
+        "I hope this helped! Let me know if you have any other questions or need anything else.",
+        "It was great talking to you today! Have a fantastic rest of your day!",
+        "Have a great day and enjoy the rest of your week!"
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thanks",
+       "Thank you", 
+       "That's helpful",
+        "Thank's a lot!",
+        "Thank you very much.",
+        "I appreciate your help.",
+        "I am grateful for your assistance.",
+        "I owe you one.",
+        "You're the best!",
+        "Appreciate it",
+        "Much obliged",
+        "Cheers",
+        "thankyou"
+
+      ],
+      "responses": ["I'm here to help. Please feel free to ask me your technical doubts",
+       "Any time!", 
+       "My pleasure",
+       "You're welcome",
+       "My pleasure",
+       "I'm glad I could be of assistance",
+       "It was my pleasure to help you today! Please don't hesitate to contact us again if you have any other questions or concerns.",
+       "I'm glad I could be of assistance! We're here to help, you 24/7, so please don't hesitate to reach out if you need anything else",
+       "Thank you for your thanks! It's our pleasure to help you in any way that we can",
+       "Your thanks means a lot to us! We're always happy to help our customers, so please don't hesitate to reach out again if you need anything"
+       
+      ]
+    }
+  ]
+}
