@@ -8,6 +8,23 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Distribution / packaging
+.Python
 build/
 develop-eggs/
 dist/
@@ -127,3 +144,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+

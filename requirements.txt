@@ -12,4 +12,5 @@ openai
 PyPDF2
 uvicorn
 python-dotenv
-
+faiss-cpu
+tiktoken
