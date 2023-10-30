@@ -15,11 +15,11 @@ from pydantic import BaseModel
 from model import NeuralNet
 from dotenv import load_dotenv
 from langchain import OpenAI
-
+import openai
+import os
 
 load_dotenv()
-
-# Create FastAPI instance
+openai.api_key = os.getenv("OPENAI_API_KEY")
 app = FastAPI()
 
 # Add CORS middleware for handling cross-origin requests
