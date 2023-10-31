@@ -1,22 +1,34 @@
-import random
+"""_summary_
+Chatbot service implemented in FastAPI use neural network and 
+word embedding to have a fluent conversation with the user. 
+
+Returns:
+    _type_: _description_
+"""
 import json
-import torch
+import os
 import pickle
+import random
+
+import torch
 from PyPDF2 import PdfReader
+
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from nltk_utils import bag_of_words, tokenize
+from pydantic import BaseModel
+from dotenv import load_dotenv
+
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain import FAISS
+from langchain import FAISS, OpenAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.callbacks import get_openai_callback
-from fastapi import FastAPI
-from pydantic import BaseModel
-from model import NeuralNet
-from dotenv import load_dotenv
-from langchain import OpenAI
+
 import openai
-import os
+
+from model import NeuralNet
+from nltk_utils import bag_of_words, tokenize
+
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -72,12 +84,12 @@ def process_text(text_process):
 
     # Convert the chunks of text into embeddings to form a knowledge base
     embeddings = OpenAIEmbeddings()
-    knowledgeBase = FAISS.from_texts(chunks, embeddings)
+    knowledge_base = FAISS.from_texts(chunks, embeddings)
     
     with open("./docs/knowledgeBase.pkl", "wb") as pickle_f:
-        pickle.dump(knowledgeBase, pickle_f)
+        pickle.dump(knowledge_base, pickle_f)
     
-    return knowledgeBase
+    return knowledge_base
 
 # Load or create knowledge base
 try:
@@ -97,19 +109,46 @@ except FileNotFoundError:
 # Define routes using FastAPI decorators
 @app.get("/")
 def index_get():
+    """
+    Responds to a GET request at the root URL.
+    Returns a welcome message.
+    """
     return {"message": "Welcome to the FastAPI app"}
 
 # Define a function to filter results by relevance score
 def filter_results_by_score(results, threshold):
+    """
+    Filters a list of results by a relevance threshold.
+
+    Args:
+        results (list): A list of (doc, score) pairs.
+        threshold (float): The minimum score required to keep a result.
+
+    Returns:
+        list: A filtered list of (doc, score) pairs.
+    """
     return [doc for doc, score in results if score >= threshold]
 
 # Pydantic model for question input
 class QuestionInput(BaseModel):
+    """
+    Pydantic model for incoming question input.
+    """
     query: str
 
 # Use the function
 @app.post("/ask_question")
 async def ask_question(question_input: QuestionInput):
+    """
+    Responds to a POST request at the "/ask_question" endpoint.
+    Processes the input question and returns an answer.
+
+    Args:
+        question_input (QuestionInput): Input question data.
+
+    Returns:
+        dict: A response containing an answer or an error message.
+    """
     query = question_input.query
     response = "Please enter a valid question"  # Default response if query is not provided or an error occurs
 
