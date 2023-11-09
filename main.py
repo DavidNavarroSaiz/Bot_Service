@@ -164,6 +164,7 @@ async def ask_question(question_input: QuestionInput):
         probs = torch.softmax(output, dim=1)
         prob = probs[0][predicted.item()]
         print("prob: ",prob)
+        # TODO: parametro
         if prob.item() > 0.998:
             for intent in intents["intents"]:
                 if tag == intent["tag"]:
